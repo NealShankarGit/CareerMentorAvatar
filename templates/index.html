@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Career Coach AI Study</title>
+    <link rel="stylesheet" href="/static/main.css">
+    <style>
+        #agent-container {
+            display: none;
+            position: relative;
+            width: 600px;
+            height: 400px;
+            margin: 20px auto;
+        }
+        #survey-section {
+            margin: 20px auto;
+            text-align: center;
+        }
+        #thank-you-message {
+            text-align: center;
+            color: green;
+            margin-top: 20px;
+        }
+        /* Fix the small positioning of agent */
+        .d-id-agent {
+            position: fixed !important;
+            bottom: 20px !important;
+            right: 20px !important;
+            width: 300px;
+            height: 400px;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <h1>Career Coach AI Study</h1>
+
+    <!-- Section for Start/Stop Controls -->
+    <div id="controls">
+        <button id="start-btn">Start Agent</button>
+        <button id="stop-btn">Stop Agent</button>
+    </div>
+
+    <!-- Embedded D-ID Agent Script -->
+    <div id="agent-container">
+        <script
+            type="module"
+            src="https://agent.d-id.com/v1/index.js"
+            data-name="did-agent"
+            data-mode="fabio"
+            data-client-key="YXV0aDB8NjZhMDcxODdlMDQ4NjczMWRiZTg5YmY2Omh2U0NiczU0NUY2andNU0t1cDBNeQ=="
+            data-agent-id="agt_bMG9ba0R"
+            data-monitor="true"
+            data-event-listeners="input:handleInput,output:handleOutput">
+        </script>
+    </div>
+
+    <!-- Display Qualtrics Survey -->
+    <div id="survey-section">
+        <h2>Survey</h2>
+        <iframe src="https://your-qualtrics-survey-url.com" width="800" height="600" frameborder="0"></iframe>
+    </div>
+
+    <!-- Thank You Message (hidden initially) -->
+    <div id="thank-you-message" style="display: none;">
+        <h2>Thank you for completing the study!</h2>
+    </div>
+
+    <!-- JavaScript for controlling the agent, tracking input/output, and tracking interactions -->
+    <script>
+        // Monitor user input
+        function handleInput(event) {
+            console.log('User Input Event Triggered:', event);
+            if (event && event.detail && event.detail.text) {
+                console.log('User Input:', event.detail.text);
+                trackInteraction('user_input', event.detail.text);
+            }
+        }
+
+        // Monitor agent output
+        function handleOutput(event) {
+            console.log('Agent Output Event Triggered:', event);
+            if (event && event.detail && event.detail.text) {
+                console.log('Agent Output:', event.detail.text);
+                trackInteraction('agent_output', event.detail.text);
+            }
+        }
+
+        // Start the agent when the "Start" button is clicked
+        document.getElementById('start-btn').addEventListener('click', function() {
+            // Track when user clicks "Start"
+            trackInteraction('start');
+
+            // Show the agent interaction area
+            document.querySelector('.d-id-agent').style.display = 'block';
+            document.getElementById('thank-you-message').style.display = 'none';
+        });
+
+        // Stop the agent and hide it when the "Stop" button is clicked
+        document.getElementById('stop-btn').addEventListener('click', function() {
+            // Track when user clicks "Stop"
+            trackInteraction('stop');
+
+            // Hide agent interaction and show thank you message
+            document.querySelector('.d-id-agent').style.display = 'none';
+            document.getElementById('thank-you-message').style.display = 'block';
+        });
+
+        // Function to track interactions (input/output)
+        function trackInteraction(type, content = '') {
+            fetch('/track', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ action: type, content: content, timestamp: new Date().toISOString() }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Interaction tracked:', data);
+            })
+            .catch(error => {
+                console.error('Error tracking interaction:', error);
+            });
+        }
+
+        // Debugging - listen for all events on the page
+        document.addEventListener('input', handleInput);
+        document.addEventListener('output', handleOutput);
+    </script>
+</body>
+</html>
