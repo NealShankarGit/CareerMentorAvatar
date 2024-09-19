@@ -5,14 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8f9a2ba7-7565-4849-b41e-e34cbf777077" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/CareerCoachChatbotStudy.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user_interactions.log" beforeDir="false" afterPath="$PROJECT_DIR$/user_interactions.log" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -101,7 +96,11 @@
       <updated>1725820089171</updated>
       <workItem from="1725820090108" duration="2367000" />
       <workItem from="1726160357387" duration="792000" />
-      <workItem from="1726164286094" duration="1302000" />
+      <workItem from="1726164286094" duration="2248000" />
+      <workItem from="1726765691753" duration="1488000" />
+      <workItem from="1726767443563" duration="1351000" />
+      <workItem from="1726772204663" duration="662000" />
+      <workItem from="1726773813562" duration="8000" />
     </task>
     <servers />
   </component>
@@ -110,5 +109,6 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/CareerCoachChatbotStudy$CareerCoachChatbotStudy.coverage" NAME="CareerCoachChatbotStudy Coverage Results" MODIFIED="1726164292420" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/app_py$CareerCoachChatbotStudy.coverage" NAME="CareerCoachChatbotStudy Coverage Results" MODIFIED="1726773814308" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
   </component>
 </project>

@@ -4,45 +4,62 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Career Coach AI Study</title>
-    <link rel="stylesheet" href="/static/main.css">
     <style>
-        #agent-container {
-            display: none;
-            position: relative;
-            width: 600px;
-            height: 400px;
-            margin: 20px auto;
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
-        #survey-section {
-            margin: 20px auto;
+        h1 {
             text-align: center;
+            margin-top: 20px;
+        }
+        #instructions {
+            text-align: center;
+            font-size: 18px;
+            margin: 20px 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+            border-radius: 10px;
+            max-width: 80%;
+        }
+        .arrow {
+            font-size: 24px;
+            margin: 0 5px;
+        }
+        #controls {
+            margin: 20px 0;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 0 10px;
         }
         #thank-you-message {
             text-align: center;
             color: green;
-            margin-top: 20px;
-        }
-        /* Fix the small positioning of agent */
-        .d-id-agent {
-            position: fixed !important;
-            bottom: 20px !important;
-            right: 20px !important;
-            width: 300px;
-            height: 400px;
-            z-index: 1000;
+            display: none;
         }
     </style>
 </head>
 <body>
     <h1>Career Coach AI Study</h1>
 
-    <!-- Section for Start/Stop Controls -->
+    <div id="instructions">
+        To begin the survey, please click on the AI agent icon in the bottom right corner of the screen.
+        <br><br>
+        <span class="arrow">↘️</span> Click the agent to start <span class="arrow">↘️</span>
+    </div>
+
     <div id="controls">
-        <button id="start-btn">Start Agent</button>
         <button id="stop-btn">Stop Agent</button>
     </div>
 
-    <!-- Embedded D-ID Agent Script -->
     <div id="agent-container">
         <script
             type="module"
@@ -51,25 +68,19 @@
             data-mode="fabio"
             data-client-key="YXV0aDB8NjZhMDcxODdlMDQ4NjczMWRiZTg5YmY2Omh2U0NiczU0NUY2andNU0t1cDBNeQ=="
             data-agent-id="agt_bMG9ba0R"
-            data-monitor="true"
-            data-event-listeners="input:handleInput,output:handleOutput">
+            data-monitor="true">
         </script>
     </div>
 
-    <!-- Display Qualtrics Survey -->
-    <div id="survey-section">
-        <h2>Survey</h2>
-        <iframe src="https://your-qualtrics-survey-url.com" width="800" height="600" frameborder="0"></iframe>
-    </div>
-
-    <!-- Thank You Message (hidden initially) -->
-    <div id="thank-you-message" style="display: none;">
+    <div id="thank-you-message">
         <h2>Thank you for completing the study!</h2>
     </div>
 
-    <!-- JavaScript for controlling the agent, tracking input/output, and tracking interactions -->
     <script>
-        // Monitor user input
+        const stopBtn = document.getElementById('stop-btn');
+        const thankYouMessage = document.getElementById('thank-you-message');
+        const agentContainer = document.getElementById('agent-container');
+
         function handleInput(event) {
             console.log('User Input Event Triggered:', event);
             if (event && event.detail && event.detail.text) {
@@ -78,7 +89,6 @@
             }
         }
 
-        // Monitor agent output
         function handleOutput(event) {
             console.log('Agent Output Event Triggered:', event);
             if (event && event.detail && event.detail.text) {
@@ -87,27 +97,13 @@
             }
         }
 
-        // Start the agent when the "Start" button is clicked
-        document.getElementById('start-btn').addEventListener('click', function() {
-            // Track when user clicks "Start"
-            trackInteraction('start');
-
-            // Show the agent interaction area
-            document.querySelector('.d-id-agent').style.display = 'block';
-            document.getElementById('thank-you-message').style.display = 'none';
-        });
-
-        // Stop the agent and hide it when the "Stop" button is clicked
-        document.getElementById('stop-btn').addEventListener('click', function() {
-            // Track when user clicks "Stop"
+        stopBtn.addEventListener('click', function() {
             trackInteraction('stop');
-
-            // Hide agent interaction and show thank you message
-            document.querySelector('.d-id-agent').style.display = 'none';
-            document.getElementById('thank-you-message').style.display = 'block';
+            agentContainer.style.display = 'none';
+            thankYouMessage.style.display = 'block';
+            // You may need to call a specific method to stop the agent if provided by D-ID
         });
 
-        // Function to track interactions (input/output)
         function trackInteraction(type, content = '') {
             fetch('/track', {
                 method: 'POST',
@@ -125,7 +121,6 @@
             });
         }
 
-        // Debugging - listen for all events on the page
         document.addEventListener('input', handleInput);
         document.addEventListener('output', handleOutput);
     </script>
